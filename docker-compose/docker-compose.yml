@@ -1,12 +1,12 @@
 version: '3.4'
 services:
   dwhsync:
-      image: kenyahmis/dwhsync:${TAG}
-      container_name: dwhsync
-      restart: always
-      environment:
-        - ConnectionStrings__LiveConnection=Data Source=${DB_ORIGIN_HOST},${DB_ORIGIN_PORT};Initial Catalog=${DB_ORIGIN_NAME};Persist Security Info=True;User ID=${DB_ORIGIN_USER};Password=${DB_ORIGIN_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
-        - ConnectionStrings__LiveConnection=Data Source=${DB_SOURCE_HOST},${DB_SOURCE_PORT};Initial Catalog=${DB_SOURCE_NAME};Persist Security Info=True;User ID=${DB_SOURCE_USER};Password=${DB_SOURCE_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
-        - ConnectionStrings__LiveConnection=Data Source=${DB_TARGET_HOST},${DB_TARGET_PORT};Initial Catalog=${DB_TARGET_NAME};Persist Security Info=True;User ID=${DB_TARGET_USER};Password=${DB_TARGET_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
-        - Transfers__Batch=${APP_BATCH}
-        - Transfers__Targets__1=${APP_TABLE_1}
+    image: kenyahmis/dwhsync:${TAG}
+    container_name: dwhsync
+    restart: always
+    environment:
+      - ConnectionStrings__LiveConnectionOrigin=Data Source=${DB_ORIGIN_HOST},${DB_ORIGIN_PORT};Initial Catalog=${DB_ORIGIN_NAME};Persist Security Info=True;User ID=${DB_ORIGIN_USER};Password=${DB_ORIGIN_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
+      - ConnectionStrings__LiveConnectionSource=Data Source=${DB_SOURCE_HOST},${DB_SOURCE_PORT};Initial Catalog=${DB_SOURCE_NAME};Persist Security Info=True;User ID=${DB_SOURCE_USER};Password=${DB_SOURCE_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
+      - ConnectionStrings__LiveConnectionTarget=Data Source=${DB_TARGET_HOST},${DB_TARGET_PORT};Initial Catalog=${DB_TARGET_NAME};Persist Security Info=True;User ID=${DB_TARGET_USER};Password=${DB_TARGET_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
+      - Transfers__Batch=${APP_BATCH}
+      - Transfers__Targets__1=${APP_TABLE_1}
