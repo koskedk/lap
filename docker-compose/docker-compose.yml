@@ -10,5 +10,3 @@ services:
         - ConnectionStrings__LiveConnection=Data Source=${DB_TARGET_HOST},${DB_TARGET_PORT};Initial Catalog=${DB_TARGET_NAME};Persist Security Info=True;User ID=${DB_TARGET_USER};Password=${DB_TARGET_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
         - Transfers__Batch=${APP_BATCH}
         - Transfers__Targets__1=${APP_TABLE_1}
-      ports:
-        - "${APP_PORT}:${APP_HOST_PORT}"
