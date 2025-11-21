@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  dwhlive:
+      image: kenyahmis/dwhlive:${TAG}
+      container_name: dwhlive
+      restart: always
+      environment:
+        - ConnectionStrings__LiveConnection=Data Source=${DB_HOST},${DB_PORT};Initial Catalog=${DB_NAME};Persist Security Info=True;User ID=${DB_USER};Password=${DB_PASSWORD};Pooling=True;MultipleActiveResultSets=True;TrustServerCertificate=True;
+        - AllowedCorsOrigins__0=${APP_ORIGIN_0}
+        - AllowedCorsOrigins__1=${APP_ORIGIN_1}
+        - ServicesApi__NDW=${APP_SVC_NDW}
+      ports:
+        - "${APP_PORT}:${APP_HOST_PORT}"
