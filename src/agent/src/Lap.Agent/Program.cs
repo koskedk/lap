@@ -14,6 +14,7 @@ class Program
         configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+            .AddEnvironmentVariables()
             .Build();
         
         Log.Logger = new LoggerConfiguration()

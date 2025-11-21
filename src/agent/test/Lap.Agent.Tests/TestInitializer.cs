@@ -24,6 +24,7 @@ public class TestInitializer
     {
         var config = Configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.Test.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables()
             .Build();
         var services = new ServiceCollection();
     }
