@@ -2,6 +2,7 @@
 using Dotmim.Sync.Enumerations;
 using Dotmim.Sync.SqlServer;
 using Lap.Agent.Config;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
@@ -31,6 +32,8 @@ public class TransferJob
 
     public async Task<SyncResult> RunAsync()
     {
+        await VerifyConnections();
+        
         var srcProvider = new SqlSyncProvider(Source);
         var tgtProvider = new SqlSyncProvider(Target);
 
@@ -46,7 +49,37 @@ public class TransferJob
         
         return res;
     }
-    
+
+    private async Task VerifyConnections()
+    {
+        Log.Information("Verifying connections");
+        try
+        {
+            await using var cn=new SqlConnection(Source);
+            await cn.OpenAsync();
+            await cn.CloseAsync();
+            Log.Information("Verifying connections [SOURCE] OK ");
+        }
+        catch (Exception e)
+        {
+            Log.Error(e, $"SOURCE Error {Source}");
+            throw;
+        }
+        
+        try
+        {
+            await using var cn=new SqlConnection(Target);
+            await cn.OpenAsync();
+            await cn.CloseAsync();
+            Log.Information("Verifying connections [TARGET] OK ");
+        }
+        catch (Exception e)
+        {
+            Log.Error(e, $"TARGET Error {Target}");
+            throw;
+        }
+    }
+
     public class ConsoleProgress : IProgress<ProgressArgs>
     {
         public void Report(ProgressArgs s)
