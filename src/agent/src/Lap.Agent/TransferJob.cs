@@ -43,9 +43,21 @@ public class TransferJob
         agent.Options.BatchSize = Options.Batch;
 
         var progress = new ConsoleProgress();
-
         
-        var res=await agent.SynchronizeAsync(setup,SyncType.Reinitialize,progress ).ConfigureAwait(false);
+        SyncType syncType = SyncType.Normal; 
+        if (Options.Mode.HasValue)
+        {
+            syncType = (SyncType)Options.Mode.Value;
+            
+            if (!Enum.IsDefined(typeof(SyncType), syncType))
+            {
+                Log.Warning($"Invalid integer value {Options.Mode.Value} for SynchronizationType. Defaulting to Normal.");
+                syncType = SyncType.Normal;
+            }
+        }
+        
+        
+        var res=await agent.SynchronizeAsync(setup,syncType,progress ).ConfigureAwait(false);
         
         return res;
     }
