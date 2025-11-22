@@ -39,8 +39,13 @@ public class TransferJob
 
         var setup = new SyncSetup(Options.Targets);
         
+        foreach (var target in Options.Targets)
+            setup.Tables[$"{target}"].SyncDirection = SyncDirection.DownloadOnly;
+        
         var agent=new SyncAgent(tgtProvider,srcProvider);
-        agent.Options.BatchSize = Options.Batch;
+        agent.Options.BatchSize = Options.Batch * 1024 * 1024;
+     
+        agent.Options.DisableConstraintsOnApplyChanges = true;
 
         var progress = new ConsoleProgress();
         
